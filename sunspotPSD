@@ -1,0 +1,66 @@
+load sunspot.dat
+year = sunspot(:,1);
+relNums = sunspot(:,2);
+
+figure
+plot(year,relNums,'LineWidth',1.5)
+xlabel('year')
+ylabel('Zurich number')
+title('Sunspot Data for approximately 250 years')
+
+figure
+subplot(3,2,1)
+plot(year(1:50),relNums(1:50),'LineWidth',1.5)
+xlabel('year')
+ylabel('Zurich number')
+title('Sunspot Data for 50 years')
+subplot(3,2,2)
+plot(year(51:100),relNums(51:100),'LineWidth',1.5)
+xlabel('year')
+ylabel('Zurich number')
+title('Sunspot Data for 50 years')
+subplot(3,2,3)
+plot(year(101:150),relNums(101:150),'LineWidth',1.5)
+xlabel('year')
+ylabel('Zurich number')
+title('Sunspot Data for 50 years')
+subplot(3,2,4)
+plot(year(151:200),relNums(151:200),'LineWidth',1.5)
+xlabel('year')
+ylabel('Zurich number')
+title('Sunspot Data for 50 years')
+subplot(3,2,5)
+plot(year(201:250),relNums(201:250),'LineWidth',1.5)
+xlabel('year')
+ylabel('Zurich number')
+title('Sunspot Data for 50 years')
+subplot(3,2,6)
+plot(year(251:length(year)),relNums(251:length(relNums)),'LineWidth',1.5)
+xlabel('year')
+ylabel('Zurich number')
+title('Sunspot Data for 50 years')
+
+%% Power Spectrum Density
+y = fft(relNums);
+
+n = length(y);
+pds = abs(y(1:floor(n/2))).^2;
+maxfreq = 1/2;
+freq = (1:n/2)/(n/2)*maxfreq;
+period = 1./freq;
+
+figure
+plot(period,pds,'LineWidth',1.5)
+xlabel('Years/Cycle')
+ylabel('Power(dB)')
+title('Power Density Spectrum')
+xlim([0 50])
+%% Power Spectrum Density with a Rectangular Window
+[pxx,f] = periodogram(relNums,[],[],1);
+
+figure
+plot(f,(10*log10(pxx)),'LineWidth',1.5)
+xlabel('Cycle/Years')
+ylabel('Power(dB)')
+title('PDS Estimate using a Periodogram')
+
